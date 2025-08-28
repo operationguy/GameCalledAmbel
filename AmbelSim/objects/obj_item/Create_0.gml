@@ -1,0 +1,1 @@
+max_stack = get_max_stack(iid);

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"new_mind",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_mind",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

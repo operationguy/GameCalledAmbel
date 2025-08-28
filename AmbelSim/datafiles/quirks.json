@@ -1,0 +1,33 @@
+{
+    "-1": {
+        "title": "",
+        "desc": ""
+    },
+
+    "-2": {
+        "title": "Queue Priority",
+        "desc": "Tries to finish tasks in order of assignment."
+    },
+
+    "-3": {
+        "title": "Stack Priority",
+        "desc": "Tries to finish the most recent task first."
+    },
+
+    "-4": {
+        "title": "Random Priority",
+        "desc": "Randomly chooses a task to finish."
+    },
+
+    "0": {
+        "title": "Quick-footed",
+        "desc": "Moves 1.5x faster.",
+        "excl": ["1"]
+    },
+
+    "1": {
+        "title": "Sluggish",
+        "desc": "Moves 0.75x faster.",
+        "excl": ["0"]
+    }
+}
