@@ -1,1 +1,1 @@
-on_click(func,params);
+if (!global.reading || ignore_read){on_click(func,params);}

@@ -1,16 +1,24 @@
 randomize();
 edit_mode = false;
-ambel_name = generate_random_ambel_name();
+global.ambel_name = generate_random_ambel_name();
 
 function start_sim(){
 	while (array_length(elems) > 0){
 		instance_destroy(array_pop(elems));
 	}
 	
+	instance_create_layer(room_width-30,room_height-30,"UI",obj_button,{
+		image_index : global.paused ? 10 : 11,
+		func : function(_p){
+			global.paused = !global.paused;
+			image_index = global.paused ? 10 : 11;
+		}
+	});
+	
 	// make starting maomie
 	repeat(3){
 		instance_create_layer(random_range(120,room_width-120),random_range(120,room_height-120),"Objects",obj_maomie,
-		{image_index : irandom(17), ambel : ambel_name}
+		{image_index : irandom(17), ambel : global.ambel_name}
 		);
 	}
 	
@@ -40,7 +48,7 @@ elems = [
 		parent : self.id,
 		func : function(_p){
 			with parent{
-				ambel_name = generate_random_ambel_name();
+				global.ambel_name = generate_random_ambel_name();
 		}}
 	}),
 	instance_create_layer(x-120,y+108,"UI",obj_button,{

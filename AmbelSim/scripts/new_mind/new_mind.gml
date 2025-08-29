@@ -57,7 +57,7 @@ function new_mind(){
 	_r.insert_subpart("forage",new MindPart());
 	_r.insert_subpart("combat",new MindPart());
 	_r.insert_subpart("social",new MindPart());
-	_r.insert_subpart("theory",new MindPart());
+	_r.insert_subpart("design",new MindPart());
 	
 	return _r;
 }

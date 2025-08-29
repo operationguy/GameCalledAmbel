@@ -33,6 +33,7 @@
     {"$GMObjectProperty":"v1","%Name":"func","filters":[],"listItems":[],"multiselect":false,"name":"func","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"function(_p){}","varType":4,},
     {"$GMObjectProperty":"v1","%Name":"params","filters":[],"listItems":[],"multiselect":false,"name":"params","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"{}","varType":4,},
     {"$GMObjectProperty":"v1","%Name":"toggle","filters":[],"listItems":[],"multiselect":false,"name":"toggle","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"False","varType":3,},
+    {"$GMObjectProperty":"v1","%Name":"ignore_read","filters":[],"listItems":[],"multiselect":false,"name":"ignore_read","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"False","varType":3,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

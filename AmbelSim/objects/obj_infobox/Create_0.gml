@@ -6,6 +6,7 @@ elems = array_concat(elems, [
 	{
 		image_index : 9,
 		parent : self.id,
+		ignore_read : true,
 		func : function(_p){
 			global.reading = false;
 			global.paused = parent.pause;
@@ -13,3 +14,5 @@ elems = array_concat(elems, [
 		}
 	})
 ]);
+
+global.paused = true;

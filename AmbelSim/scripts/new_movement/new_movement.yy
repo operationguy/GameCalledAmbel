@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"new_movement",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"new_movement",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

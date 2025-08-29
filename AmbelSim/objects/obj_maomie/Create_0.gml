@@ -14,6 +14,10 @@ held = false;
 image_xscale = z.base;
 image_yscale = z.base;
 
+// PAWN EXCLUSIVES //
+
+selected = false;
+
 local_timer = 0;
 pv = irandom(99);
 
@@ -22,21 +26,131 @@ heat = 1;
 mood = 1;
 rest = 1;
 stress = 0;
+pain = 0;
 
 equip = empty_item();
 carry = empty_item();
+
+movelist = [];
+tasklist = [];
+task = {};
 
 body = new_body();
 mind = new_mind();
 soul = new_soul();
 
 mind.scramble();
+soul.quirkify(irandom(1));
+
+p_spd = 1;
+set_speed();
 
 path = path_add();
 path_set_closed(path,false);
+path_position = 1;
+
+function select(){
+	with obj_maomie{
+		if (self.id != other.id){selected = false;}
+		else {selected = !selected}
+	}
+	global.assigning = selected;
+}
 
 function local_tick(_p){
 	return (local_timer+pv)%_p == 0;
+}
+
+function schedule_task(_t, _period = 1){
+	if local_tick(_period){
+		if soul.has_quirk(QUIRK.TASK_QUEUE){
+			array_insert(tasklist,0,_t);
+		}
+		else if soul.has_quirk(QUIRK.TASK_STACK){
+			array_push(tasklist,_t);
+		}
+		else{
+			array_insert(tasklist,irandom(array_length(tasklist)),_t);
+		}
+	}
+}
+
+function enqueue_movement(_m){
+	if _m.manual{
+		array_foreach(movelist,function(_elem,_ind){
+			if _elem.manual{
+				array_delete(movelist,_ind,1);
+			}
+		});
+		array_insert(movelist,0,_m);
+	}
+	
+	else{
+		array_push(movelist,_m);
+	}
+}
+
+function dequeue_movement(){
+	if (array_length(movelist) == 0){return false;}
+	
+	array_shift(movelist).activate();
+	return true;
+}
+
+function perform_task(){
+	// check to see if task is not a Task Object
+	if !is_instanceof(task,TaskObj){
+		// get the next task in queue
+		if !(array_length(tasklist) == 0){
+			next_task();
+		}
+		else return;
+	}
+	// tick task
+	if local_tick(task.tick_num()){
+		task.execute_task();
+	}
+	// check if task is finished
+	if task.done{
+		task = finish_action();
+	}
+}
+
+function next_task(){
+	if (array_length(tasklist) == 0){
+		task = noone;
+	}
+	else{
+		task = array_pop(tasklist);
+	}
+}
+
+function no_tasks_or_movement(){
+	return (struct_names_count(task) == 0 && array_length(tasklist) == 0 && array_length(movelist) == 0);
+}
+
+function set_speed(_spd = 1){
+	// quirk modifier
+	var _qs = 1;
+	
+	if soul.has_quirk(QUIRK.FAST){
+		_qs = 1.5;
+	}
+	else if soul.has_quirk(QUIRK.SLOW){
+		_qs = 0.75;
+	}
+	
+	// body damage modifier
+	var _bs = 
+	0.5 * (body.get_part("leg_l").get_part("foot").hp + body.get_part("leg_l").hp)/2
+	+
+	0.5 * (body.get_part("leg_r").get_part("foot").hp + body.get_part("leg_r").hp)/2
+	;
+	
+	// pain modifier
+	var _ps = 1-pain;
+	
+	p_spd = _spd * _qs * _bs * _ps;
 }
 
 function perc_tick(_var,_p,_x){
@@ -71,6 +185,7 @@ function std_disp(_x,_y,_title,_val,_col = #C6C6C6){
 }
 
 func_l = function(_q){
+	select();
 }
 
 func_r = function(_p){
@@ -85,7 +200,8 @@ func_r = function(_p){
 			perc_disp(128,60,"HEAT",heat),
 			perc_disp(28,72,"MOOD",mood),
 			perc_disp(128,72,"REST",rest),
-			perc_disp(78,84,"STRESS",stress,true),
+			perc_disp(28,84,"STRESS",stress,true),
+			perc_disp(128,84,"PAIN",pain,true),
 			
 		//items
 			[
@@ -146,18 +262,28 @@ func_r = function(_p){
 			std_disp(220,308,"exp",mind.subparts[$ "social"].experience),
 			std_disp(220,320,"next",mind.subparts[$ "social"].to_next_level),
 			
-			std_disp(200,344,"THEORY",mind.subparts[$ "theory"].level,mind.subparts[$ "theory"].interest ? #00FF00 : #C6C6C6),
-			std_disp(220,356,"exp",mind.subparts[$ "theory"].experience),
-			std_disp(220,368,"next",mind.subparts[$ "theory"].to_next_level),
+			std_disp(200,344,"DESIGN",mind.subparts[$ "design"].level,mind.subparts[$ "design"].interest ? #00FF00 : #C6C6C6),
+			std_disp(220,356,"exp",mind.subparts[$ "design"].experience),
+			std_disp(220,368,"next",mind.subparts[$ "design"].to_next_level),
 		)
 	});
+	
+	var _quirks = struct_get_names(soul.subparts);
+	var _dy = 0;
+	while (array_length(_quirks) > 0){
+		var _q = soul.subparts[$ array_pop(_quirks)];
+		array_push(_i.elems,caption(200,392+_dy,,,_q.title,_q.col));
+		array_push(_i.elems,caption(220,404+_dy,,,_q.desc,#C6C6C6));
+		_dy += 24;
+	}
 	
 	if !is_empty_item(equip){
 		array_push(_i.elems,instance_create_layer(40,128,"InfoboxText",obj_button,{
 			image_index : 4,
 			parent : self.id,
 			func : function(_p){
-			}
+			},
+			ignore_read : true,
 		}));
 	}
 	
@@ -166,9 +292,8 @@ func_r = function(_p){
 			image_index : 4,
 			parent : self.id,
 			func : function(_p){
-			}
+			},
+			ignore_read : true,
 		}));
 	}
-	
-	global.paused = true;
 }

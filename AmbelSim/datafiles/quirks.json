@@ -22,12 +22,58 @@
     "0": {
         "title": "Quick-footed",
         "desc": "Moves 1.5x faster.",
-        "excl": ["1"]
+        "excl": ["1"],
+        "col": 3
     },
 
     "1": {
         "title": "Sluggish",
         "desc": "Moves 0.75x faster.",
-        "excl": ["0"]
+        "excl": ["0"],
+        "col": 1
+    },
+
+    "2": {
+        "title": "Grouch",
+        "desc": "Max MOOD -25%.",
+        "excl": ["3"],
+        "col" : 1
+    },
+
+    "3": {
+        "title": "Optimist",
+        "desc": "Passive MOOD gain +10%.",
+        "excl": ["2"],
+        "col" : 3
+    },
+
+    "4": {
+        "title": "High Metabolism",
+        "desc": "Passive FOOD and REST loss -15%.",
+        "col" : 1
+    },
+
+    "5": {
+        "title": "Fast Learner",
+        "desc": "Skill gain +25%.",
+        "col" : 3
+    },
+
+    "6": {
+        "title": "Rugged",
+        "desc": "STRESS from low HEAT -50%.",
+        "col" : 3
+    },
+
+    "7": {
+        "title": "Adamant",
+        "desc": "MOOD loss from STRESS -50%.",
+        "col" : 3
+    },
+
+    "8": {
+        "title": "Pacifist",
+        "desc": "Incapable of violence.",
+        "col" : 4
     }
 }

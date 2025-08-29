@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"p_idle",
+  "%Name":"pathmakers",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"p_idle",
+  "name":"pathmakers",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

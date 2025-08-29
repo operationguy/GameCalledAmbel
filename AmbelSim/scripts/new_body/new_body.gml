@@ -30,6 +30,26 @@ function BodyPart(_hpmax, _healmod, _vital = false, _name = "") constructor{
 		_part.name = _key;
 	}
 	
+	static get_part = function(_key){
+		// base case
+		if (name == _key){return self;}
+		
+		// recursion
+		var _subparts = struct_get_names(subparts);
+		var _p = noone
+		while (_p == noone && array_length(_subparts) > 0){
+			_p = subparts[$ array_pop(_subparts)].get_part(_key);
+		}
+		
+		// success
+		if (_p != noone){
+			return _p;
+		}
+		
+		// fail
+		return noone;
+	}
+	
 	static hp_to_string = function(){
 		return string_concat(hp,"/",hpmax);
 	}
