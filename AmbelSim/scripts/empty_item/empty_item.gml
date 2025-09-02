@@ -3,5 +3,5 @@ function empty_item(){
 }
 
 function is_empty_item(_e){
-	return _e.iid == -1;
+	return _e.iid == ITEM.EMPTY;
 }

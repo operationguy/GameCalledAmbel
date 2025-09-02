@@ -1,3 +1,5 @@
+var _wave = wave(pv,2.5);
+
 var _breathe = 0.05*abs(sin(4*degtorad(local_timer)+pv));
 
 draw_sprite_ext(sprite_index,image_index,x,y,z.zoom*image_xscale,z.zoom+_breathe,0,c_white,0.3);
@@ -5,6 +7,8 @@ draw_sprite_ext(sprite_index,image_index,x,y,z.zoom*image_xscale,z.zoom+_breathe
 draw_set_halign(fa_center);
 
 if selected{
+	draw_sprite_ext(spr_pawn_arrow,0,x,y-72-4*_wave,wave(0,4),1,0,c_white,1);
+	
 	draw_text(x,y-50,name);
 	
 	var _disp_task = 
@@ -21,7 +25,9 @@ if selected{
 		path_add_point(_tpath,x,y,100);
 		path_add_point(_tpath,path_get_point_x(path,1),path_get_point_y(path,1),100);
 		
+		draw_set_alpha(0.25);
 		draw_path(_tpath,0,0,true);
+		draw_set_alpha(1);
 		
 		path_delete(_tpath);
 	}

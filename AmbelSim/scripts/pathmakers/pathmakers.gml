@@ -42,3 +42,21 @@ function p_to_cursor(_inst){
 		path_start(_path,1,path_action_stop,true);
 	}
 }
+
+function p_to_point(_inst,_x,_y){
+	var _path = _inst.path;
+	path_clear_points(_path);
+	
+	path_add_point(_path,_inst.x,_inst.y,50);
+	
+	path_add_point(
+	_path,
+	clamp(_x,20,_x-20),
+	clamp(_y,60,_y-20),
+	100);
+	
+	path_auto_turn(_path,_inst);
+	with _inst{
+		path_start(_path,1,path_action_stop,true);
+	}
+}

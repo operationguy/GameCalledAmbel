@@ -1,0 +1,21 @@
+{
+    "-1" : {
+        "title": "Empty Item",
+        "desc": ""
+    },
+    "0" : {
+        "title": "Mushroom",
+        "desc": "The fruiting body of a highland fungus.",
+        "maxstack": 99
+    },
+    "1" : {
+        "title": "Wood",
+        "desc": "Hard, fiberous material harvested from a tree or bush.",
+        "maxstack": 3
+    },
+    "2" : {
+        "title": "Berry",
+        "desc": "Small fruit harvested from a plant.",
+        "maxstack": 99
+    }
+}
